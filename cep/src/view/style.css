@@ -1,0 +1,39 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.main-container{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to right, #1d4350, #a43931);
+}
+.sub-container{        
+    display: flex;
+    width: 30%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+.sub-container h1{
+    color: #FFF;
+    margin-bottom: 20px;
+}
+.sub-container label{
+    align-self: flex-start;
+    color: #AAA;
+    font-size: 1.1rem;
+    font-weight: bold;
+    
+}
+.sub-container input{   
+    margin: 10px;
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    outline: none;    
+}
+
