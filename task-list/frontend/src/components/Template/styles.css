@@ -1,0 +1,23 @@
+.container-main{
+    height: 100vh;
+    width: 100vw;
+    background-color: #caa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.subcontainer{
+    height: 80%;
+    width: 80%;
+    background-color: #FFA;
+
+    display: grid;
+    grid-template-columns: 40% 60%;
+    grid-template-rows: 1fr;
+}
+
+.left-side, .right-side{
+    height: 100%;
+    width: 100%;
+}
