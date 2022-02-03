@@ -8,4 +8,7 @@ module.exports = app => {
         .put(app.api.task.save)
         .get(app.api.task.getTask)
         .delete(app.api.task.remove)
+    app.route('/tasks/status/:id')
+        .put(app.api.task.updateStatus)
+
 }

@@ -1,0 +1,47 @@
+.main-insert{
+    background-color: #0acef1da;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px 0px 0px 10px;
+    border-right: solid 1px rgba(0, 0, 0, 0.2);
+}
+
+.main-insert h1{
+    color: #FFF;
+    font-size: 3rem;
+    margin-bottom: 100px;
+}
+
+.main-insert input{
+    width: 70%;
+    padding: 10px;
+    outline: none;
+    border-radius: 10px;
+    border: none;
+    margin-bottom: 10px;
+}
+.main-insert textarea{
+    width: 70%;
+    padding: 10px;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    resize: none;
+    margin-bottom: 10px;
+}
+
+.main-insert button{
+    width: 35%;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #FFF;
+    color: #000;
+    font-size: 1.2rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    
+}

@@ -25,13 +25,14 @@ function TaskInsert(){
             .catch(err => console.log(err))      
             
         reset()
+        window.location.reload(true)
     }
 
     return(
-        <div>
+        <div className='main-insert'>
             <h1>Task List</h1>
             <input name="name" value={task.name} placeholder="Nome" onChange={e => handleOnChange(e)}/>
-            <input name="description" value={task.description} placeholder="Descrição" onChange={e => handleOnChange(e)}/>
+            <textarea name="description" value={task.description} placeholder="Descrição" onChange={e => handleOnChange(e)}/>
             <button onClick={save}>Inserir</button>
         </div>
     )

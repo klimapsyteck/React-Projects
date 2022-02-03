@@ -1,0 +1,90 @@
+.main-view{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.header-page{
+    position: absolute;
+    top: 0;
+    width: 100%;
+   
+    background-color: rgb(33, 159, 175);
+    display: grid;
+    grid-template-columns: 0% 100%;
+    text-align: center;
+    align-items: center;
+}
+.header-page > div:first-child{
+    font-size: 2rem;
+    z-index: 1;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.sub-view{
+    height: 40%;
+    width: 40%;
+    background-color: rgb(33, 159, 175);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.view-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.view-content input{
+    width: 70%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+}
+
+.view-content textarea{
+    width: 70%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    resize: none;
+    height: 50px;
+}
+.view-content select{
+    width: 30%;
+    padding: 10px;
+    margin-bottom: 10px;
+    outline: none;
+    border-radius: 10px;
+}
+.view-buttons{
+    width: 50%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.view-buttons button{    
+    padding: 5px 10px;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;  
+}
+.view-buttons button:first-child{
+    background-color: rgb(92, 250, 1);     
+}
+
+.view-buttons button:last-child{
+    background-color: rgb(250, 101, 1);
+}

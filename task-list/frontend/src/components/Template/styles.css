@@ -10,11 +10,11 @@
 .subcontainer{
     height: 80%;
     width: 80%;
-    background-color: #FFA;
-
+    background-color: #FFF;
     display: grid;
     grid-template-columns: 40% 60%;
     grid-template-rows: 1fr;
+    border-radius: 10px;
 }
 
 .left-side, .right-side{

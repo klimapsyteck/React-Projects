@@ -59,5 +59,13 @@ module.exports = app => {
         }
     }
 
-    return {save, getTasks, getTask, remove}
+    const updateStatus = (req, res) => {
+        app.db('tasks')
+            .update({status: req.body.status})
+            .where({id: req.params.id})
+            .then(_ => res.status(204).send())
+            .catch(err => res.status(500).send(erro))
+    }
+
+    return {save, getTasks, getTask, remove, updateStatus}
 }
