@@ -1,0 +1,36 @@
+ul{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+    color: #000;
+}
+.main-read{
+    padding: 20px;
+}
+.container-general{    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;    
+    margin-bottom: 10px;
+    background-color: chartreuse;
+    padding: 10px;
+    border-radius: 10px;
+}
+.container-item{
+    flex: 1;
+    border-right: solid 1px #000;
+}
+.detail-item{
+    display: flex;
+    flex-direction: column;
+}
+.button-item{
+    margin: 0 20px;
+}
+.button-item button{
+    background-color: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
