@@ -20,12 +20,13 @@ function TaskInsert(){
     }
 
     async function save(){
-        await axios.post('http://localhost:4000/tasks/', task)
-            .then(_ => alert('Tarefa salva com sucesso.'))
-            .catch(err => console.log(err))      
-            
-        reset()
-        window.location.reload(true)
+       const teste =  await axios.post('http://localhost:4000/tasks/', task)
+            .then(_ => {
+                alert('Tarefa salva com sucesso.')
+                reset()
+                window.location.reload(true)
+            })
+            .catch(err => console.log(err))            
     }
 
     return(

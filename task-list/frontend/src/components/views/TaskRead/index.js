@@ -4,6 +4,7 @@ import {useEffect, useState} from 'react'
 import {Link} from 'react-router-dom'
 import {MdDoneOutline} from 'react-icons/md'
 
+
 function TaskRead(){
 
     useEffect(() => {
@@ -11,9 +12,6 @@ function TaskRead(){
     }, [])
 
     const [arrayList, setArrayList] = useState([])
-    const [task, setTask] = useState({"name":"", "description":"", "status": false})
-
-
 
     async function gettingList(){        
         await axios.get('http://localhost:4000/tasks').then(res => setArrayList(res.data))      
