@@ -3,6 +3,7 @@ import axios from 'axios'
 import {useEffect, useState} from 'react'
 import {Link} from 'react-router-dom'
 import {MdDoneOutline} from 'react-icons/md'
+import {BiLeftArrowAlt, BiRightArrowAlt, BiArrowToLeft, BiArrowToRight} from 'react-icons/bi'
 
 import {ToastContainer, toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
@@ -15,6 +16,16 @@ function TaskRead(){
     }, [])
 
     const [arrayList, setArrayList] = useState([])
+    let perPage = 5
+
+    const [state, setState] = useState({
+        page: 1, 
+        perPage,
+        totalPage: Math.ceil(arrayList.length / perPage),
+        maxVisibleButtons: 5
+    })
+    const [teste, setStart] = useState({ start: 0, end: 5})
+ 
 
     const successComplete = () => toast("Tarefa concluída.", {type: 'success'});
     const successOpen = () => toast("Tarefa aberta novamente.", {type: 'success'});
@@ -35,8 +46,13 @@ function TaskRead(){
 
     }
 
-    function mountList(){
-        return arrayList.map( item => {
+    function next(){
+        setStart({start: teste.start+5, end: teste.end + 5})
+        
+    }
+
+    function mountList(start, end){
+        return arrayList.slice(start, end).map( item => {
             return(
                 <li key={item.id}>
                     <div className='container-general'>
@@ -59,12 +75,24 @@ function TaskRead(){
         })           
     }
 
+    function update(){
+        return mountList(teste.start, teste.end)        
+    }
+
     return(
         <div className='main-read'>   
         <ToastContainer />         
             <ul>
-                {mountList()}   
-            </ul>
+                {update()}   
+            </ul>         
+            <div className='button-paginate'>                
+                <button><BiArrowToLeft /></button>
+                <button><BiLeftArrowAlt /></button>
+                <div>1</div>
+                <button onClick={next}><BiRightArrowAlt /></button>
+                <button><BiArrowToRight /></button>
+            </div>
+            
         </div>
     )
 }

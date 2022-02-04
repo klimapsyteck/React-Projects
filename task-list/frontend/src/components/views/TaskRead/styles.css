@@ -34,3 +34,14 @@ a{
     font-size: 1.5rem;
     cursor: pointer;
 }
+.button-paginate{
+    position: absolute;
+    bottom: 50px;
+    width: 98%;
+    left: 1%;
+    text-align: center;
+    display: flex;
+    justify-content: center;  
+    padding-top: 20px;
+    border-top: solid 1.5px rgba(0, 0, 0, 0.2);
+}
