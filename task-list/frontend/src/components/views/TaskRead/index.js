@@ -4,6 +4,9 @@ import {useEffect, useState} from 'react'
 import {Link} from 'react-router-dom'
 import {MdDoneOutline} from 'react-icons/md'
 
+import {ToastContainer, toast} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function TaskRead(){
 
@@ -13,6 +16,9 @@ function TaskRead(){
 
     const [arrayList, setArrayList] = useState([])
 
+    const successComplete = () => toast("Tarefa concluída.", {type: 'success'});
+    const successOpen = () => toast("Tarefa aberta novamente.", {type: 'success'});
+
     async function gettingList(){        
         await axios.get('http://localhost:4000/tasks').then(res => setArrayList(res.data))      
     } 
@@ -21,8 +27,12 @@ function TaskRead(){
         await axios.put('http://localhost:4000/tasks/status/' + id, {
             status: !status
         })
+    
+        {!status ? successComplete() : successOpen()}
+        setInterval(() => {
+            window.location.reload(true)
+        }, 1000)   
 
-        window.location.reload(true)
     }
 
     function mountList(){
@@ -50,7 +60,8 @@ function TaskRead(){
     }
 
     return(
-        <div className='main-read'>            
+        <div className='main-read'>   
+        <ToastContainer />         
             <ul>
                 {mountList()}   
             </ul>

@@ -4,18 +4,21 @@ import {useParams, Link} from 'react-router-dom'
 import {BsArrowLeftCircleFill} from 'react-icons/bs'
 import axios from 'axios'
 
+import {ToastContainer, toast} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 function TaskView(){
     const params = useParams()
     const id = params.id
-
-    /* let redirect = useHref() */
 
     useEffect(() => {
         getTask()
     }, [])
 
     const [task, setTask] = useState({"name":"", "description": "", "status": ""})
+
+    const successUpdated = () => toast("Tarefa atualizada.", {type: 'success'});
+    const successDeleted = () => toast("Tarefa excluída com sucesso.", {type: 'danger'});
 
     async function getTask(){
         await axios.get('http://localhost:4000/tasks/' + id)
@@ -34,16 +37,22 @@ function TaskView(){
 
     function save(){
         axios.put('http://localhost:4000/tasks/'+ id, task)
-            .then(_ => alert('Altualizado com sucesso.'))
+            .then(_ => successUpdated())
     }
 
     function remove(){
         axios.delete('http://localhost:4000/tasks/'+ id)
-        window.location.href = "/" 
+            .then(_ => successDeleted())
+
+        setInterval(() => {
+            window.location.href = "/" 
+        }, 1300)  
+       
     } 
 
     return(
         <div className='main-view'>
+            <ToastContainer />
             <div className='header-page'>
                 <div><Link to={"/"}><BsArrowLeftCircleFill /></Link></div>
                 <div><h1>Detalhes da Tarefa</h1></div>

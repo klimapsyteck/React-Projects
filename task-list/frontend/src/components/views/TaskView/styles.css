@@ -80,6 +80,7 @@
     border: none;
     border-radius: 5px;
     font-size: 1.2rem;  
+    cursor: pointer;
 }
 .view-buttons button:first-child{
     background-color: rgb(92, 250, 1);     
