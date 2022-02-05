@@ -12,27 +12,29 @@ import 'react-toastify/dist/ReactToastify.css';
 function TaskRead(){
 
     useEffect(() => {
-        gettingList()        
+        gettingList()  
+        update()      
     }, [])
 
-    const [arrayList, setArrayList] = useState([])
-    let perPage = 5
+    let perPages = 5    
+    let pageI = 1
 
-    const [state, setState] = useState({
-        page: 1, 
-        perPage,
-        totalPage: Math.ceil(arrayList.length / perPage),
-        maxVisibleButtons: 5
-    })
-    const [teste, setStart] = useState({ start: 0, end: 5})
- 
+    const [arrayList, setArrayList] = useState([])
+    let [page, setPage] = useState(pageI)
+    const [perPage, setPerPage] = useState(perPages)
+    const [totalPage, setTotalPage] = useState()
+    const [maxVisibleButtons, setMaxVisibleButtons] = useState(5)
+    const [list, setList] = useState({ start: 0, end: 5})
 
     const successComplete = () => toast("Tarefa concluída.", {type: 'success'});
     const successOpen = () => toast("Tarefa aberta novamente.", {type: 'success'});
 
     async function gettingList(){        
-        await axios.get('http://localhost:4000/tasks').then(res => setArrayList(res.data))      
-    } 
+        await axios.get('http://localhost:4000/tasks').then(res => {
+            setArrayList(res.data)
+            setTotalPage(Math.ceil(res.data.length / perPage))
+    })      
+    }     
 
     async function completeTask(id, status){
         await axios.put('http://localhost:4000/tasks/status/' + id, {
@@ -46,9 +48,41 @@ function TaskRead(){
 
     }
 
-    function next(){
-        setStart({start: teste.start+5, end: teste.end + 5})
-        
+    const controls = {
+        next(){       
+            setPage(++page)
+    
+            if(page > totalPage){
+                setPage(--page)                 
+            }        
+            let pageS = page - 1
+            let start = pageS * perPage
+            let end = start + perPage
+            setList({start: start, end: end})
+            update()
+    
+
+        },
+        prev(){
+            setPage(--page)
+            if(page < 1){
+                setPage(++page)
+            }        
+            let pageS = page - 1
+            let start = pageS * perPage
+            let end = start + perPage
+            setList({start: start, end: end})
+            update()
+        },
+        goTo(page){
+            setPage(page)
+            let pageS = page - 1
+            let start = pageS * perPage
+            let end = start + perPage
+            setList({start: start, end: end})
+            update()
+
+        }
     }
 
     function mountList(start, end){
@@ -74,25 +108,68 @@ function TaskRead(){
             )
         })           
     }
+    
 
-    function update(){
-        return mountList(teste.start, teste.end)        
+    const buttons = {
+        create(number){
+            const button = document.createElement('div')
+            button.innerHTML = number
+
+            if(page === number){
+                button.classList.add('active')
+            }
+
+            button.addEventListener('click', (e) => {
+                let page = e.target.innerText
+                controls.goTo(page)
+                update()
+            })
+            document.querySelector('.buttons-list').appendChild(button)
+        },
+        update(){
+            document.querySelector('.buttons-list').innerHTML = ""
+            const {maxLeft, maxRight} = buttons.calculateMaxVisible()
+
+            for(let page = maxLeft; page <= maxRight; page++){
+                buttons.create(page)
+            }
+
+        },
+        calculateMaxVisible(){
+            let maxLeft = (page - Math.floor(maxVisibleButtons / 2))
+            let maxRight = (page + Math.floor(maxVisibleButtons / 2))
+
+            if(maxLeft < 1){
+                maxLeft = 1
+                maxRight = maxVisibleButtons
+            }
+            if(maxRight > totalPage){
+                maxLeft = totalPage - (maxVisibleButtons - 1)
+                maxRight = totalPage
+                if(maxLeft < 1){
+                    maxLeft = 1
+                }
+            }
+            return {maxLeft, maxRight}
+        }
     }
-
+    function update(){
+        buttons.update()   
+    }
+    
     return(
         <div className='main-read'>   
         <ToastContainer />         
             <ul>
-                {update()}   
+                {mountList(list.start, list.end)}   
             </ul>         
             <div className='button-paginate'>                
-                <button><BiArrowToLeft /></button>
-                <button><BiLeftArrowAlt /></button>
-                <div>1</div>
-                <button onClick={next}><BiRightArrowAlt /></button>
-                <button><BiArrowToRight /></button>
-            </div>
-            
+                <button onClick={() => controls.goTo(1)}><BiArrowToLeft /></button>
+                <button onClick={controls.prev}><BiLeftArrowAlt /></button>
+                <div className='buttons-list'>1</div>
+                <button onClick={controls.next}><BiRightArrowAlt /></button>
+                <button onClick={() => controls.goTo(totalPage)}><BiArrowToRight /></button>
+            </div>            
         </div>
     )
 }
