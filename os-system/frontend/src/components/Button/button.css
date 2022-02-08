@@ -1,0 +1,19 @@
+
+.general{
+    padding: 5px 10px;
+    border: none;
+    font-size: 1.2rem;
+    border-radius: 10px;    
+}
+.save{
+    background-color: green;
+    color: #FFF;
+}
+.edit{
+    background-color: orange;
+    color: #FFF;
+}
+.delete{
+    background-color: red;
+    color: #FFF;
+}

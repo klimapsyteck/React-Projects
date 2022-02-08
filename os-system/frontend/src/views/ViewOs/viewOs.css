@@ -1,0 +1,42 @@
+.container-os{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.sub-container-os{
+    padding: 15px;
+    width: 70%;
+    height: 80%;
+    background-color: aqua;
+    border-radius: 5px;
+}
+
+.os-number{
+    height: 50px;
+    margin-bottom: 10px;
+}
+.os-number input{
+    height: 100%;
+}
+.cliente-data input{
+    width: 40%;
+}
+.data-os{
+    display: flex;
+    margin: 10px 0;
+    justify-content: space-around;
+}
+textarea{
+    width: 100%;
+    height: 100px;
+    resize: none;
+}
+.os-buttons{
+    display: flex;
+    justify-content: flex-end;
+}
+.os-buttons button {
+    margin: 0 10px;
+}
