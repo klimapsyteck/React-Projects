@@ -1,0 +1,92 @@
+import './listOs.css'
+import {Link} from 'react-router-dom'
+import React, {useState, useEffect} from 'react'
+import {useTable} from 'react-table'
+import axios from 'axios'
+
+
+function ListOs(){
+    useEffect(() => {
+        getData()        
+    }, [])
+
+    const [oss, setOss] = useState([])
+
+    function getData(){
+        axios.get("http://localhost:3000/os").then(res => setOss(res.data))
+    }
+
+    /* const data = useMemo(() => oss, []) */
+    const data = React.useMemo(() => oss, [])
+    const columns = React.useMemo(() => [
+        {
+            Header: "N°",
+            accessor: 'id'            
+        },
+        {
+            Header: "Cliente",
+            accessor: 'client_name'
+        },
+        {
+            Header: "Equipment",
+            accessor: 'equipment'
+        },
+
+    ], [])
+
+    const tableInstance = useTable({columns, data})
+    const {
+        getTableProps,
+        getTableBodyProps,
+        headerGroups,
+        rows,
+        prepareRow
+    } = tableInstance
+
+    function renderTable(){
+        return  <table {...getTableProps()}>
+        <thead>
+            {headerGroups.map(headerGroup => (
+                <tr {...headerGroup.getHeaderGroupProps()}>
+                    {headerGroup.headers.map(column => (
+                        <th {...column.getHeaderProps()}>
+                            {column.render('Header')}
+                        </th>                           
+                    ))}
+                </tr>
+            ))}              
+        </thead>
+        <tbody {...getTableBodyProps()}>
+            {rows.map(row => {
+                prepareRow(row)
+                return(
+                    <tr {...row.getRowProps()}>
+                        {row.cells.map(cell => {
+                            return (
+                                <td {...cell.getCellProps()}>
+                                    {cell.render('Cell')}                    
+                                </td>
+                            )
+                        })}
+                    </tr>
+                )
+            })}
+        </tbody>
+    </table>
+    }
+    return(
+        <div className='container'>
+            <header>
+                <div>Os System</div>
+                <div><Link to="/create">Nova OS</Link></div>
+            </header>
+            
+            <div className='content'>    
+                {renderTable()}
+            </div>
+            <footer>Produced</footer>    
+    </div>
+    )
+}
+
+export default ListOs;

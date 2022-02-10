@@ -7,7 +7,7 @@ app.db = db;
 consign()
     .then('./api')
     .then('./config/middlewares.js')
-    .then('./config/routes.js')
+    .then('./config/router.js')
     .into(app)
 
 app.listen(3000, () =>{
