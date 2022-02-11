@@ -11,10 +11,12 @@ function ViewOs(){
         getData()
     }, [])
 
-    const [os, setOs] = useState({status: "", value: "",  reported_problem: "",  general_information: "", informed_problem: ""})   
+    const [os, setOs] = useState({status: "", value: "",  reported_problem: "",  general_information: "", informed_problem: ""}) 
+    const [things, setThings] = useState({})
 
-    function getData(){
-        axios.get("http://localhost:3000/os/" + id).then(res => setOs(res.data))        
+    async function getData(){
+       await axios.get("http://localhost:3000/os/" + id).then(res => setOs(res.data))  
+       await axios.get("http://localhost:3000/os/testes/" + id).then(res => setThings(res.data))           
     }  
 
     function alter(){
@@ -29,8 +31,7 @@ function ViewOs(){
 
     function handleOsChange(e){
         if(e.target.getAttribute('name') === "os_status"){
-            setOs({
-                client_name: os.client_name,
+            setOs({               
                 equipment: os.equipment,
                 general_information: os.general_information,
                 id: id,
@@ -42,7 +43,7 @@ function ViewOs(){
         }
         if(e.target.getAttribute('name') === "os_value"){
             setOs({
-                client_name: os.client_name,
+               
                 equipment: os.equipment,
                 general_information: os.general_information,
                 id: id,
@@ -54,7 +55,7 @@ function ViewOs(){
         }
         if(e.target.getAttribute('name') === "os_rp"){
             setOs({
-                client_name: os.client_name,
+               
                 equipment: os.equipment,
                 general_information: os.general_information,
                 id: id,
@@ -66,7 +67,7 @@ function ViewOs(){
         }
         if(e.target.getAttribute('name') === "os_gi"){
             setOs({
-                client_name: os.client_name,
+                
                 equipment: os.equipment,
                 general_information: e.target.value,
                 id: id,
@@ -88,7 +89,7 @@ function ViewOs(){
                 <div className="os-number"><span>Número OS: {os.id}</span></div>
                 <div>07/02/2022</div>
             </div>                
-            <div className="cliente-data">Cliente: <span>{os.client_name}</span></div>
+            <div className="cliente-data">Cliente: <span>{things.name}</span></div>
             <div className="data-os">
                 <div className="status">
                     <span>Situação</span>

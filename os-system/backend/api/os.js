@@ -24,8 +24,9 @@ module.exports = app =>{
         const data = {...req.body}
         console.log(data)
         app.db('os')                       
-            .max('id as idOs')            
-            .then(os => app.db('cllient_os').insert({idOs: os[0].idOs, idClient: data.idClient, idUser: data.idUser }).then(_ => console.log('Passei')))           
+            .max('id as idOs') 
+            .first()          
+            .then(os => app.db('client_os').insert({idOs: os.idOs, idClient: data.idClient, idUser: data.idUser }).then(_ => console.log('Passei')))           
         }
 
     const getAll = (req, res) => {
@@ -33,6 +34,14 @@ module.exports = app =>{
             .select('*')
             .then(oss => res.json(oss))
             .catch(err => res.status(500).send(err))
+    }
+
+    const getThings = (req, res) =>{
+        app.db('client_os')
+            .select('*')            
+            .where({idOs: req.params.id})         
+            .first()
+            .then(data => app.db('clients').select('*').where({id: data.idClient}).then(client => res.json(client)))
     }
 
     const getById = (req, res) => {
@@ -53,5 +62,5 @@ module.exports = app =>{
             .catch(err => res.status(500).send(err))
     }
 
-    return {save, getAll, getById, remove, getLast}
+    return {save, getAll, getById, remove, getLast, getThings}
 }

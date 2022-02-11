@@ -1,10 +1,9 @@
 
 exports.up = function(knex) {
     return knex.schema.createTable('os', table => {
-        table.increments('id').primary()
-        table.string('client_name').notNull()
+        table.increments('id').primary()   
         table.string('status').notNull()
-        table.string('value').notNull()
+        table.string('value')
         table.string('equipment').notNull()
         table.string('informed_problem')
         table.string('reported_problem')

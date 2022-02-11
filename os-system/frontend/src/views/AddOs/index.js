@@ -1,30 +1,31 @@
 import './addOs.css'
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 
 function AddOs(){
+    useEffect(() => {
+        getDatas()
+    }, [])
+    
     const state = {
-        client_name: "", status: "budget", value: "0", equipment: "", informed_problem: "", reported_problem: "", general_information: ""
+        status: "budget", value: "0", equipment: "", informed_problem: "", reported_problem: "", general_information: ""
     }
     const [os, setOs] = useState({...state})
+    const [clients, setClients] = useState([])  
+    const [users, setUsers] = useState([])  
+    const [client, setClient] = useState({id: ""})
+    const [user, setUser] = useState({id: ""})
 
     function handleChange(e){
         const attributeName = e.target.getAttribute('name')
-        if(attributeName === "client_name"){
-            setOs({
-                client_name: e.target.value,
-                equipment: os.equipment,
-                general_information: os.general_information,
-                informed_problem: os.informed_problem,
-                reported_problem: os.reported_problem,
-                status: os.status,
-                value: os.value
-            })
-
+        if(attributeName === "client_id"){
+            setClient({id: e.target.value})
+        }else if(attributeName === "user_id"){
+            setUser({id: e.target.value})
         }else if(attributeName === "status"){
             setOs({
-                client_name: os.client_name,
+               
                 equipment: os.equipment,
                 general_information: os.general_information,                
                 informed_problem: os.informed_problem,
@@ -35,7 +36,7 @@ function AddOs(){
 
         }else if(attributeName === "value"){
             setOs({
-                client_name: os.client_name,
+                
                 equipment: os.equipment,
                 general_information: os.general_information,                
                 informed_problem: os.informed_problem,
@@ -46,7 +47,7 @@ function AddOs(){
 
         }else if(attributeName === "equipment"){
             setOs({
-                client_name: os.client_name,
+                
                 equipment: e.target.value,
                 general_information: os.general_information,                
                 informed_problem: os.informed_problem,
@@ -57,7 +58,7 @@ function AddOs(){
 
         }else if(attributeName === "informed_problem"){
             setOs({
-                client_name: os.client_name,
+                
                 equipment: os.equipment,
                 general_information: os.general_information,                
                 informed_problem: e.target.value,
@@ -68,7 +69,7 @@ function AddOs(){
 
         }else if(attributeName === "reported_problem"){
             setOs({
-                client_name: os.client_name,
+                
                 equipment: os.equipment,
                 general_information: os.general_information,                
                 informed_problem: os.informed_problem,
@@ -79,7 +80,7 @@ function AddOs(){
 
         }else if(attributeName === "general_information"){
             setOs({
-                client_name: os.client_name,
+                
                 equipment: os.equipment,
                 general_information: e.target.value,                
                 informed_problem: os.informed_problem,
@@ -91,9 +92,15 @@ function AddOs(){
         }
     }
 
-   async function save(){
-        await axios.post("http://localhost:3000/os", os).then(res => console.log(res))
-        axios.post("http://localhost:3000/os/testes", {idClient: 1, idUser: 2})
+    async function getDatas(){
+       await axios.get("http://localhost:3000/client").then(res => setClients(res.data))
+       await axios.get("http://localhost:3000/user").then(res => setUsers(res.data))
+       
+    }
+
+   async function save(){       
+        await axios.post("http://localhost:3000/os", os).then(_ => _)
+        axios.post("http://localhost:3000/os/testes", {idClient: client.id, idUser: user.id})
 
         setOs({...state})
     }
@@ -104,8 +111,28 @@ function AddOs(){
             <div className="sub-container-os">
                 <div className="flex-space-between">                              
                     <div>07/02/2022</div>
-                </div>                
-                <div className="cliente-data"><input value={os.client_name} name="client_name" onChange={e => handleChange(e)} /></div>
+                </div>               
+                
+                <div className="cliente-data">
+                    <select name="client_id" onChange={e => handleChange(e)}>
+                    <option>Selecione</option>
+                        {clients.map(e => {
+                            return(
+                                <option value={e.id} key={e.id}>{e.name}</option>
+                            )
+                        })}
+                        
+                    </select>
+                    <select name="user_id" onChange={e => handleChange(e)}>
+                        <option>Selecione</option>
+                        {users.map(e => {
+                            return(
+                                <option value={e.id} key={e.id}>{e.name}</option>
+                            )
+                        })}
+                        
+                    </select>
+                </div>
                 <div className="data-os">
                     <div className="status">
                         <select value={os.status} name="status" onChange={e => handleChange(e)}>
