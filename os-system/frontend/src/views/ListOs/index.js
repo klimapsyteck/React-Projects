@@ -2,6 +2,7 @@ import './listOs.css'
 import {Link} from 'react-router-dom'
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
+import TableOS from '../../components/Tables'
 
 function ListOs(){    
     const [oss, setOss] = useState([])
@@ -15,12 +16,7 @@ function ListOs(){
         axios.get("http://localhost:3000/os").then(res => setOss(res.data))
     }
 
-    function remove(id){
-        if(window.confirm('Você está certo de que deseja executar essa ação?') === true){
-            axios.delete("http://localhost:3000/os/" + id)   
-            
-        }              
-    }
+    
 
     function status(status){
         switch (status) {
@@ -61,22 +57,7 @@ function ListOs(){
                             <th>Ações</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {oss.map(os => {
-                            return(
-                                <tr key={os.id}>
-                                    <td>{os.id}</td>
-                                    <td>{os.client_name}</td>
-                                    <td>{status(os.status)}</td>
-                                    <td>{os.equipment}</td>
-                                    <td>
-                                        <button><Link to={`/os/${os.id}`}>Editar</Link></button>
-                                        <button onClick={() => remove(os.id)}>Excluir</button>
-                                    </td>
-                                </tr>
-                            )
-                        })}
-                    </tbody>
+                    <TableOS />
                 </table>
             </div>
             <footer>Produced</footer>    
