@@ -18,12 +18,13 @@ function TableOS(props){
         client_name: "kesley",
         equipment: "notebook"   
     }]
-    const obj = [{...props}]
+    
+    
     
     
     return(    
         <tbody>
-            {obj.map(os => {
+            {obs.map(os => {
                 return(
                     <tr key={os.id}>
                         <td>{os.id}</td>
